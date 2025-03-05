@@ -24,4 +24,8 @@ function getArtistInfo() {
     const artistLink = document.getElementById('artistLink').value;
     // Implementation for getting artist info
     console.log('Getting info for:', artistLink);
-} 
+}
+
+// The analyzeInstagram function is implemented directly in the instagram-cleanup.html page
+// This is just a reference to ensure it's acknowledged in the global scope
+// Actual implementation is in the page-specific script 

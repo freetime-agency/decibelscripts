@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Up Instagram Following</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <style>
+        body {
+            background: #121212;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            padding: 20px;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        label {
+            min-width: 180px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        input[type="text"], input[type="number"] {
+            background: rgba(50, 50, 50, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: white;
+            flex: 1;
+        }
+
+        button {
+            background: #1DB954;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1ed760;
+        }
+
+        .results {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .results-summary {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 6px;
+            padding: 15px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            text-align: left;
+            color: white;
+        }
+        
+        th {
+            background: rgba(40, 40, 40, 0.8);
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-link">← Back to Dashboard</a>
+    
+    <header>
+        <h1>Clean Up Instagram Following</h1>
+    </header>
+
+    <div class="description">
+        Find and unfollow inactive accounts and users who don't follow you back on Instagram
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <div class="form-row">
+                <label for="instagramUsername">Instagram Username:</label>
+                <input type="text" id="instagramUsername" placeholder="Enter your Instagram username">
+            </div>
+            <div class="form-row">
+                <label for="inactiveThreshold">Inactive Threshold (days):</label>
+                <input type="number" id="inactiveThreshold" value="90" min="1">
+            </div>
+            <div class="form-row">
+                <label for="includeNonFollowers">Include Non-Followers:</label>
+                <input type="checkbox" id="includeNonFollowers" checked>
+            </div>
+            <div class="form-row">
+                <button id="analyzeButton" onclick="analyzeInstagram()">Analyze Following</button>
+            </div>
+        </div>
+
+        <div class="results hidden" id="resultsContainer">
+            <h2>Analysis Results</h2>
+            <div class="results-summary">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalFollowing">0</div>
+                    <div class="stat-label">Total Following</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="inactiveAccounts">0</div>
+                    <div class="stat-label">Inactive Accounts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="nonFollowerCount">0</div>
+                    <div class="stat-label">Non-Followers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="recommendedUnfollow">0</div>
+                    <div class="stat-label">Recommended Unfollow</div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Last Activity</th>
+                        <th>Follows You</th>
+                        <th>Reason</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="accountsList">
+                    <!-- Data will be populated via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../scripts/scripts.js"></script>
+    <script>
+        function analyzeInstagram() {
+            const username = document.getElementById('instagramUsername').value;
+            const inactiveThreshold = document.getElementById('inactiveThreshold').value;
+            const includeNonFollowers = document.getElementById('includeNonFollowers').checked;
+            
+            // This is where you would add the actual API call to your backend
+            // For demo purposes, we'll just show some mock data
+            
+            document.getElementById('resultsContainer').classList.remove('hidden');
+            
+            // Update summary stats with mock data
+            document.getElementById('totalFollowing').textContent = '843';
+            document.getElementById('inactiveAccounts').textContent = '127';
+            document.getElementById('nonFollowerCount').textContent = '235';
+            document.getElementById('recommendedUnfollow').textContent = '312';
+            
+            // Clear existing table data
+            const tableBody = document.getElementById('accountsList');
+            tableBody.innerHTML = '';
+            
+            // Add mock data rows
+            const mockData = [
+                {username: 'inactive_user1', lastActivity: '253 days ago', followsYou: 'No', reason: 'Inactive & Doesn\'t follow back'},
+                {username: 'ghostfollower42', lastActivity: '184 days ago', followsYou: 'No', reason: 'Inactive & Doesn\'t follow back'},
+                {username: 'active_but_not_following', lastActivity: '2 days ago', followsYou: 'No', reason: 'Doesn\'t follow back'},
+                {username: 'inactive_follower', lastActivity: '126 days ago', followsYou: 'Yes', reason: 'Inactive account'}
+            ];
+            
+            mockData.forEach(account => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${account.username}</td>
+                    <td>${account.lastActivity}</td>
+                    <td>${account.followsYou}</td>
+                    <td>${account.reason}</td>
+                    <td><button class="unfollow-btn">Unfollow</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Add event listeners to unfollow buttons
+            document.querySelectorAll('.unfollow-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const username = row.cells[0].textContent;
+                    this.textContent = 'Unfollowed';
+                    this.disabled = true;
+                    this.style.background = '#555';
+                    // In a real app, you would make an API call to actually unfollow
+                    console.log(`Unfollowed ${username}`);
+                });
+            });
+        }
+    </script>
+</body>
+</html> 

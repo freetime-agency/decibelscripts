@@ -5,23 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scripts Dashboard</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .logo-container {
+            text-align: center;
+        }
+        
+        .logo-container img {
+            height: 120px !important; /* Important to override any other styles */
+            display: inline-block;
+        }
+        
+        .schedule-info {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        
+        .recurring-icon {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 1em;
+        }
+        
+        .schedule-dates {
+            margin-top: 5px;
+            font-size: 0.85em;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Scripts Dashboard</h1>
+            <div class="logo-container">
+                <img src="./public/assets/images/Gothic Logo White One Color.png" alt="Decibel Logo" style="height: 30px;">
+            </div>
         </header>
         
         <div class="scripts-grid">
             <div class="script-card" data-script="spotify-weekly">
                 <h2>Create Weekly Spotify All Playlist</h2>
                 <p>Creates a playlist on Spotify with all of the new releases from the week</p>
+                <div class="schedule-info">
+                    <div><span class="recurring-icon">🔄</span> Every Friday, 6AM</div>
+                    <div class="schedule-dates">
+                        <div>Last run: Friday 3/7/25</div>
+                        <div>Next update: Friday 3/14/25</div>
+                    </div>
+                </div>
                 <button onclick="navigateToScript('spotify-weekly')">View Details</button>
             </div>
 
             <div class="script-card" data-script="soundcloud-weekly">
                 <h2>Create Weekly Soundcloud All Playlist</h2>
                 <p>Creates a playlist on Soundcloud with all of the new releases from the week</p>
+                <div class="schedule-info">
+                    <div><span class="recurring-icon">🔄</span> Every Friday, 6AM</div>
+                    <div class="schedule-dates">
+                        <div>Last run: Friday 3/7/25</div>
+                        <div>Next update: Friday 3/14/25</div>
+                    </div>
+                </div>
                 <button onclick="navigateToScript('soundcloud-weekly')">View Details</button>
             </div>
 
@@ -29,6 +73,12 @@
                 <h2>Get Spotify Data For Artist</h2>
                 <p>Retrieve detailed information about a Spotify artist</p>
                 <button onclick="navigateToScript('spotify-artist')">View Details</button>
+            </div>
+
+            <div class="script-card" data-script="instagram-cleanup">
+                <h2>Clean Up Instagram Following</h2>
+                <p>Find and unfollow inactive accounts and users who don't follow you back</p>
+                <button onclick="navigateToScript('instagram-cleanup')">View Details</button>
             </div>
         </div>
     </div>
