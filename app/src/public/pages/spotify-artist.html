@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Spotify Artist Data</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .script-detail {
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .artist-form {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            align-items: center;
+        }
+        
+        #artistLink {
+            flex: 1;
+            padding: 12px 15px;
+            font-size: 16px;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+        }
+
+        #artistLink::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .artist-form button {
+            padding: 12px 24px;
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            white-space: nowrap;
+            width: auto;
+        }
+
+        .artist-form button:hover {
+            background-color: #1ed760;
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            display: none;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            table-layout: fixed;
+        }
+        
+        .results-table th, .results-table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            text-align: left;
+            color: white;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            min-width: 60px;
+        }
+
+        .results-table th:nth-child(1),
+        .results-table td:nth-child(1) {
+            width: 15%;
+        }
+        
+        .results-table th:nth-child(2),
+        .results-table td:nth-child(2) {
+            width: 15%;
+        }
+        
+        .results-table th:nth-child(3),
+        .results-table td:nth-child(3) {
+            width: 20%;
+        }
+        
+        .results-table th:nth-child(4),
+        .results-table td:nth-child(4) {
+            width: 25%;
+        }
+        
+        .results-table th:nth-child(5),
+        .results-table td:nth-child(5) {
+            width: 8%;
+        }
+        
+        .results-table th:nth-child(6),
+        .results-table td:nth-child(6) {
+            width: 10%;
+        }
+        
+        .results-table th:nth-child(7),
+        .results-table td:nth-child(7) {
+            width: 7%;
+        }
+
+        .copy-button {
+            padding: 8px 16px;
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-button:hover {
+            background-color: #1ed760;
+        }
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        header a:hover {
+            opacity: 1;
+        }
+
+        .script-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            margin: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .results-table {
+                font-size: 14px;
+            }
+
+            .results-table th, .results-table td {
+                padding: 8px;
+            }
+
+            .copy-button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .results-table {
+                font-size: 12px;
+            }
+
+            .results-table th, .results-table td {
+                padding: 6px;
+            }
+
+            .copy-button {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Get Spotify Artist Data</h1>
+            <a href="../index.html">← Back to Dashboard</a>
+        </header>
+        
+        <div class="script-detail">
+            <div class="script-header">
+                <p>This script retrieves detailed information about a Spotify artist</p>
+            </div>
+
+            <div class="artist-form">
+                <input type="text" id="artistLink" placeholder="Example: https://open.spotify.com/artist/5FKchcZpQOkqFvXBj1aCvb">
+                <button onclick="getArtistInfo()">Get Info</button>
+            </div>
+
+            <table class="results-table" id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Genres</th>
+                        <th>Image URL</th>
+                        <th>Popularity</th>
+                        <th>Followers</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function getArtistInfo() {
+            const artistLinkInput = document.getElementById('artistLink');
+            const artistLink = artistLinkInput.value;
+            if (!artistLink) {
+                alert('Please enter a Spotify artist URL');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/getSpotifyArtist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: artistLink })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to fetch artist data');
+                }
+
+                const data = await response.json();
+                displayResults(data);
+                // Clear the input field after successful fetch
+                artistLinkInput.value = '';
+            } catch (error) {
+                console.error('Error:', error);
+                alert(error.message || 'Error fetching artist data');
+            }
+        }
+
+        // Add keypress event listener for the input field
+        document.getElementById('artistLink').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                getArtistInfo();
+            }
+        });
+
+        function displayResults(data) {
+            const table = document.getElementById('resultsTable');
+            const tbody = document.getElementById('resultsBody');
+            tbody.innerHTML = '';
+
+            const row = tbody.insertRow();
+            const values = [
+                data.name,
+                data.id,
+                data.genres,
+                data.image_url,
+                data.popularity,
+                data.followers
+            ];
+
+            values.forEach(value => {
+                const cell = row.insertCell();
+                cell.textContent = value;
+            });
+
+            // Add copy button cell
+            const actionCell = row.insertCell();
+            const copyButton = document.createElement('button');
+            copyButton.textContent = 'Copy Row';
+            copyButton.className = 'copy-button';
+            copyButton.onclick = () => copyRowToClipboard(values);
+            actionCell.appendChild(copyButton);
+
+            table.style.display = 'table';
+        }
+
+        function copyRowToClipboard(values) {
+            const text = values.join('\t'); // Tab-separated for spreadsheet compatibility
+            navigator.clipboard.writeText(text).then(() => {
+                // Removed the alert - silently copy to clipboard
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy to clipboard');
+            });
+        }
+    </script>
+</body>
+</html> 

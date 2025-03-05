@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Weekly Spotify All Playlist</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Create Weekly Spotify All Playlist</h1>
+            <a href="../index.html">← Back to Dashboard</a>
+        </header>
+        
+        <div class="script-detail">
+            <div class="script-header">
+                <p>This script creates a playlist on Spotify with all of the new releases from the week</p>
+                <p>Runs every Friday at 6:00 AM EST</p>
+                <p>Last run: <span id="lastRun">March 15, 2024 6:00 AM</span></p>
+                <p>Next run: <span id="nextRun">March 22, 2024 6:00 AM</span></p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date Generated</th>
+                        <th>Number of Tracks</th>
+                        <th>Number of Artists</th>
+                        <th>Play Length</th>
+                    </tr>
+                </thead>
+                <tbody id="playlistHistory">
+                    <!-- Data will be populated via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../scripts/scripts.js"></script>
+</body>
+</html> 

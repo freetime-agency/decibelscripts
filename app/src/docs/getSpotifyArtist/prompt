@@ -1,0 +1,16 @@
+this script in /getSpotifyDataForArtist will submit one API call to Spotify to get the artist's information.
+
+It will then output the information as a JSON object.
+
+On the page called spotify-artist.html, there is a form with a text input and a button. 
+
+The text that will be inputted will be the Spotify artist link: https://open.spotify.com/artist/5FKchcZpQOkqFvXBj1aCvb
+
+The last part of the link, 5FKchcZpQOkqFvXBj1aCvb, is the Spotify ID.
+
+The API call will be:
+endpoint: https://api.spotify.com/v1/artists/{id}
+
+Reference the createWeeklySpotifyAllPlaylist.js file for the API call information like auth
+
+Output all of the information from the href as a JSON object.

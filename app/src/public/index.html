@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scripts Dashboard</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Scripts Dashboard</h1>
+        </header>
+        
+        <div class="scripts-grid">
+            <div class="script-card" data-script="spotify-weekly">
+                <h2>Create Weekly Spotify All Playlist</h2>
+                <p>Creates a playlist on Spotify with all of the new releases from the week</p>
+                <button onclick="navigateToScript('spotify-weekly')">View Details</button>
+            </div>
+
+            <div class="script-card" data-script="soundcloud-weekly">
+                <h2>Create Weekly Soundcloud All Playlist</h2>
+                <p>Creates a playlist on Soundcloud with all of the new releases from the week</p>
+                <button onclick="navigateToScript('soundcloud-weekly')">View Details</button>
+            </div>
+
+            <div class="script-card" data-script="spotify-artist">
+                <h2>Get Spotify Data For Artist</h2>
+                <p>Retrieve detailed information about a Spotify artist</p>
+                <button onclick="navigateToScript('spotify-artist')">View Details</button>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/scripts.js"></script>
+</body>
+</html> 
